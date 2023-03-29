@@ -2,6 +2,11 @@
 
 Backup PostgresSQL to S3 (supports periodic backups)
 
+**This is a fork (kind of) I created for my own use. I was having a few problems
+with this so I figured this was the easiest way to go.**
+
+**Originally from: https://github.com/schickling/dockerfiles/tree/master/postgres-backup-s3**
+
 ## Usage
 
 Docker:
