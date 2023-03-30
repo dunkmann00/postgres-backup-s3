@@ -1,4 +1,5 @@
 FROM debian:11-slim
+LABEL maintainer="George Waters <gwatersdev@gmail.com>"
 
 # Add the PostgreSQL Apt Repository
 RUN sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list' \
