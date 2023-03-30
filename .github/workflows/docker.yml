@@ -53,10 +53,13 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build
-    if: ${{ secrets.DEPLOY_TO_CAPROVER }} && ${{ github.event_name == 'push' }} && ${{ github.ref_type == 'tag' }}
+    if: github.event_name == 'push' && github.ref_type == 'tag'
     steps:
       - name: Deploy to Caprover
         uses: caprover/deploy-from-github@v1.1.2
+        env:
+          DEPLOY_TO_CAPROVER: ${{ secrets.DEPLOY_TO_CAPROVER }}
+        if: env.DEPLOY_TO_CAPROVER
         with:
           server: ${{ secrets.CAPROVER_HOST }}
           app: ${{ secrets.CAPROVER_APP }}
