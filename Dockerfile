@@ -1,8 +1,12 @@
-FROM webdevops/go-crond:master-alpine
-LABEL maintainer="Johannes Schickling <schickling.j@gmail.com>"
+FROM debian:11-slim
 
-ADD install.sh install.sh
-RUN sh install.sh && rm install.sh
+# Add the PostgreSQL Apt Repository
+RUN sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list' \
+    wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
+
+RUN apt-get clean && apt-get -y update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+    postgresql-client-15 aws-cli
 
 ENV POSTGRES_DATABASE **None**
 ENV POSTGRES_BACKUP_ALL **None**
@@ -21,8 +25,15 @@ ENV S3_S3V4 no
 ENV SCHEDULE **None**
 ENV ENCRYPTION_PASSWORD **None**
 
-ADD run.sh run.sh
-ADD backup.sh backup.sh
+RUN mkdir -p /usr/src
+WORKDIR /usr/src
 
-ENTRYPOINT []
-CMD ["sh", "run.sh"]
+# Create and switch to a new user
+RUN useradd pgbackup && \
+    chown -R pgbackup /usr/src
+USER pgbackup
+
+COPY run.sh /usr/src/run.sh
+COPY backup.sh /usr/src/backup.sh
+
+CMD ["/usr/src/run.sh"]

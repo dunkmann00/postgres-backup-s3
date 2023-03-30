@@ -7,8 +7,9 @@ if [ "${S3_S3V4}" = "yes" ]; then
 fi
 
 if [ "${SCHEDULE}" = "**None**" ]; then
-  sh backup.sh
+  /usr/src/backup.sh
 else
-  echo -e "SHELL=/bin/sh\n${SCHEDULE} /bin/sh /backup.sh" > /etc/crontabs/root
-  exec go-crond /etc/crontabs/root
+  echo -e "${SCHEDULE} /usr/src/backup.sh > /proc/1/fd/1 2> /proc/1/fd/2\n" > /usr/src/backup-crontab
+  crontab /usr/src/backup-crontab
+  exec cron -f
 fi
