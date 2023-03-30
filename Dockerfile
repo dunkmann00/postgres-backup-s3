@@ -1,13 +1,17 @@
 FROM debian:11-slim
 LABEL maintainer="George Waters <gwatersdev@gmail.com>"
 
+RUN apt-get -y update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+    gnupg aws-cli
+
 # Add the PostgreSQL Apt Repository
 RUN sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list' \
     wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
 
-RUN apt-get clean && apt-get -y update && \
+RUN apt-get -y update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-    postgresql-client-15 aws-cli
+    postgresql-client-15
 
 ENV POSTGRES_DATABASE **None**
 ENV POSTGRES_BACKUP_ALL **None**
