@@ -37,11 +37,6 @@ ENV ENCRYPTION_PASSWORD **None**
 RUN mkdir -p /usr/src
 WORKDIR /usr/src
 
-# Create and switch to a new user
-RUN useradd pgbackup && \
-    chown -R pgbackup /usr/src
-USER pgbackup
-
 COPY run.sh /usr/src/run.sh
 COPY backup.sh /usr/src/backup.sh
 
