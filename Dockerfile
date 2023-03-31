@@ -3,7 +3,7 @@ LABEL maintainer="George Waters <gwatersdev@gmail.com>"
 
 RUN apt-get -y update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-    gnupg lsb-release wget awscli
+    gnupg lsb-release wget cron awscli
 
 # Add the PostgreSQL Apt Repository
 RUN sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list' && \
