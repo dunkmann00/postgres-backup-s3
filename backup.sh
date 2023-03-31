@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 
 set -eo pipefail
 
@@ -94,10 +94,10 @@ else
 
     SRC_FILE=dump.sql.gz
     DEST_FILE=${DB}_$(date +"%Y-%m-%dT%H:%M:%SZ").sql.gz
-    
+
     echo "Creating dump of ${DB} database from ${POSTGRES_HOST}..."
     pg_dump $POSTGRES_HOST_OPTS $DB | gzip > $SRC_FILE
-    
+
     if [ "${ENCRYPTION_PASSWORD}" != "**None**" ]; then
       echo "Encrypting ${SRC_FILE}"
       openssl enc -aes-256-cbc -in $SRC_FILE -out ${SRC_FILE}.enc -k $ENCRYPTION_PASSWORD
