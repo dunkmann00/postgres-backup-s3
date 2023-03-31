@@ -1,13 +1,21 @@
 FROM debian:11-slim
 LABEL maintainer="George Waters <gwatersdev@gmail.com>"
 
-# Add the PostgreSQL Apt Repository
-RUN sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list' \
-    wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
-
-RUN apt-get clean && apt-get -y update && \
+RUN apt-get -y update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-    postgresql-client-15 aws-cli
+    gnupg lsb-release wget awscli
+
+# Add the PostgreSQL Apt Repository
+RUN sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list' && \
+    mkdir -p /etc/apt/keyrings/ && \
+    wget --quiet -O- https://www.postgresql.org/media/keys/ACCC4CF8.asc | \
+    gpg -o /etc/apt/keyrings/postgres.gpg --dearmor && \
+    echo "deb [ signed-by=/etc/apt/keyrings/postgres.gpg ] http://apt.postgresql.org/pub/repos/apt/ bullseye-pgdg main 15" | \
+    tee /etc/apt/sources.list.d/pgdg.list
+
+RUN apt-get -y update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+    postgresql-client-15
 
 ENV POSTGRES_DATABASE **None**
 ENV POSTGRES_BACKUP_ALL **None**
