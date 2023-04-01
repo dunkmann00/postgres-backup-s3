@@ -16,7 +16,7 @@ else
   env > .env
   sed -i '/^SCHEDULE=.*/d' .env # Remove SCHEDULE variable, causes problems because of the spaces
 
-  echo "SHELL=/bin/bash\nBASH_ENV=/usr/src/.env\n\n${SCHEDULE} /usr/src/backup.sh > /proc/1/fd/1 2> /proc/1/fd/2\n" >> /usr/src/backup-crontab
+  echo -e "SHELL=/bin/bash\nBASH_ENV=/usr/src/.env\n\n${SCHEDULE} /usr/src/backup.sh > /proc/1/fd/1 2> /proc/1/fd/2\n" >> /usr/src/backup-crontab
   crontab /usr/src/backup-crontab
   echo "Starting cron..."
   exec cron -f
