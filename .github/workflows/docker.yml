@@ -58,8 +58,6 @@ jobs:
     steps:
       - name: Deploy to Caprover
         uses: caprover/deploy-from-github@v1.1.2
-        env:
-          DEPLOY_TO_CAPROVER: ${{ secrets.DEPLOY_TO_CAPROVER }}
         if: env.DEPLOY_TO_CAPROVER
         with:
           server: ${{ secrets.CAPROVER_HOST }}
