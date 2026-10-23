@@ -3,7 +3,7 @@ LABEL maintainer="George Waters <gwatersdev@gmail.com>"
 
 RUN apt-get -y update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-    gnupg lsb-release wget cron awscli
+    gnupg lsb-release wget cron awscli ca-certificates
 
 # Add the PostgreSQL Apt Repository
 RUN mkdir -p /etc/apt/keyrings/ && \
