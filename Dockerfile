@@ -10,7 +10,7 @@ RUN sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-
     mkdir -p /etc/apt/keyrings/ && \
     wget --quiet -O- https://www.postgresql.org/media/keys/ACCC4CF8.asc | \
     gpg -o /etc/apt/keyrings/postgres.gpg --dearmor && \
-    echo "deb [ signed-by=/etc/apt/keyrings/postgres.gpg ] http://apt.postgresql.org/pub/repos/apt/ bullseye-pgdg main 15" | \
+    echo "deb [ signed-by=/etc/apt/keyrings/postgres.gpg ] http://apt.postgresql.org/pub/repos/apt/ trixie-pgdg main 18" | \
     tee /etc/apt/sources.list.d/pgdg.list
 
 RUN apt-get -y update && \
