@@ -7,7 +7,7 @@ with this so I figured this was the easiest way to go.**
 
 **Originally from: https://github.com/schickling/dockerfiles/tree/master/postgres-backup-s3**
 
-Supports PostgreSQL 15 (Should also support all major revisions less than 15,
+Supports PostgreSQL 18 (Should also support all major revisions less than 18,
 but this has not been tested.)
 
 ## Usage
